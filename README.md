@@ -36,7 +36,7 @@ __RETUSS__ (Real-time Ensure Traceability between UML and Source-code System) �
 # 開発環境
 
 * Windows 10 Pro (64 bit) 1803
-* IntelliJ IDEA 2019.1 (Community Edition)
+* IntelliJ IDEA 2019.1 (Community Edition) → IDEなのでお好きなものでも大丈夫です。
 * Java 11
 * Gradle 5.4
 
