@@ -20,7 +20,6 @@ public class CppFile {
     private String fileName = "";
     private String sourceCode;
     private final List<CppHeaderClass> headerClassList = new ArrayList<>();
-    private CppImplClass implClass;
     private final boolean isHeader;
 
     public CppFile(String fileName, boolean isHeader) {
