@@ -13,7 +13,6 @@ import io.github.morichan.retuss.translator.cpp.header.CppTranslator;
 import java.util.*;
 
 public class CppModel {
-    private final UmlModel umlModel;
     private static final CppModel model = new CppModel();
     private final Map<String, CppFile> headerFiles = new HashMap<>();
     private final Map<String, CppFile> implFiles = new HashMap<>();
@@ -21,7 +20,6 @@ public class CppModel {
     private final List<ModelChangeListener> listeners = new ArrayList<>();
 
     private CppModel() {
-        this.umlModel = UmlModel.getInstance();
         this.translator = createTranslator();
     }
 
@@ -149,21 +147,18 @@ public class CppModel {
             // 1. マップの更新前に両方のファイルの参照を保持
             CppFile implFile = implFiles.get(oldClassName);
 
-            // 2. ヘッダーファイルの更新
-            // インクルードガード、クラス名、コンストラクタ、デストラクタの更新
-            String headerCode = headerFile.getCode();
-
-            // 3. 実装ファイルの更新
+            // 2. 実装ファイルの更新
             if (implFile != null) {
 
                 // ファイル名の更新
                 implFile.updateFileName(newClassName + ".cpp");
             }
 
-            // 4. マップの更新
+            // 3. マップの更新
             headerFiles.remove(oldClassName);
             implFiles.remove(oldClassName);
 
+            // 4. ヘッダーファイルの更新
             headerFile.updateFileName(newClassName + ".h");
 
             headerFiles.put(newClassName, headerFile);
@@ -728,16 +723,6 @@ public class CppModel {
         for (ModelChangeListener listener : listeners) {
             try {
                 listener.onFileAdded(file);
-            } catch (Exception e) {
-                System.err.println("Error notifying file addition: " + e.getMessage());
-            }
-        }
-    }
-
-    private void notifyClassAdded(CppFile file) {
-        for (ModelChangeListener listener : listeners) {
-            try {
-                listener.onClassAdded(file);
             } catch (Exception e) {
                 System.err.println("Error notifying file addition: " + e.getMessage());
             }

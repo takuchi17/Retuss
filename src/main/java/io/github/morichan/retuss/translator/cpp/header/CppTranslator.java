@@ -2,10 +2,8 @@ package io.github.morichan.retuss.translator.cpp.header;
 
 import io.github.morichan.retuss.model.uml.cpp.*;
 import io.github.morichan.retuss.parser.cpp.*;
-import io.github.morichan.retuss.translator.cpp.header.util.*;
 import io.github.morichan.fescue.feature.Operation;
 import io.github.morichan.fescue.feature.Attribute;
-import io.github.morichan.fescue.feature.type.Type;
 import io.github.morichan.fescue.feature.visibility.Visibility;
 import java.util.*;
 
@@ -13,28 +11,16 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class CppTranslator {
-    private final CppTypeMapper typeMapper;
-    private final CppVisibilityMapper visibilityMapper;
     protected final CppToUmlTranslator cppToUmlTranslator;
     protected final UmlToCppTranslator umlToCppTranslator;
 
     public CppTranslator() {
-        this.typeMapper = new CppTypeMapper();
-        this.visibilityMapper = new CppVisibilityMapper();
         this.cppToUmlTranslator = createCodeToUmlTranslator();
         this.umlToCppTranslator = createUmlToCodeTranslator();
     }
 
     public List<CppHeaderClass> translateHeaderCodeToUml(String code) {
         return cppToUmlTranslator.translateHeader(code);
-    }
-
-    public String translateVisibility(Visibility visibility) {
-        return visibilityMapper.toSourceCode(visibility);
-    }
-
-    public String translateType(Type type) {
-        return typeMapper.mapType(type.toString());
     }
 
     public Optional<String> extractClassName(String code) {
